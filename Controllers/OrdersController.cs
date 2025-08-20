@@ -1,4 +1,6 @@
 ﻿using InternalManagementECommerceTool.Data;
+using InternalManagementECommerceTool.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,10 +9,12 @@ namespace InternalManagementECommerceTool.Controllers
     public class OrdersController : Controller
     {
         public readonly ApplicationDbContext _context;
+        public readonly UserManager<ApplicationUser> _userManager;
 
-        public OrdersController(ApplicationDbContext context)
+        public OrdersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()

@@ -13,9 +13,9 @@ namespace InternalManagementECommerceTool.Controllers
     public class CheckoutController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CheckoutController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public CheckoutController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
