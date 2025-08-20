@@ -11,20 +11,18 @@ using System.Threading.Tasks;
 namespace InternalManagementECommerceTool.Areas.Dashboard.Controllers
 {
     [Area("Dashboard")]
-    public class ProductsController : Controller
+    public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ProductsController(ApplicationDbContext context)
+        public CategoriesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Products
-                .Include(x => x.Category)
-                .ToListAsync());
+            return View(await _context.Categories.ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -34,14 +32,14 @@ namespace InternalManagementECommerceTool.Areas.Dashboard.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products
+            var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(category);
         }
 
         public IActionResult Create()
@@ -49,40 +47,39 @@ namespace InternalManagementECommerceTool.Areas.Dashboard.Controllers
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Product product, IFormFile Image)
+        public async Task<IActionResult> Create(Category category, IFormFile Image)
         {
             if (ModelState.IsValid)
             {
                 if (Image == null)
                 {
                     ModelState.AddModelError(nameof(Product.Image), "Image is required.");
-                    return View(product);
+                    return View(category);
                 }
 
                 var imageName = Guid.NewGuid() + Path.GetExtension(Image.FileName);
 
-                if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/Products")))
+                if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/Categories")))
                 {
-                    Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/Products"));
+                    Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/Categories"));
                 }
 
-                var savePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/Products", imageName);
+                var savePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/Categories", imageName);
 
                 await using (var stream = new FileStream(savePath, FileMode.Create))
                 {
                     await Image.CopyToAsync(stream);
                 }
 
-                product.Image = $"/img/Products/{imageName}";
+                category.Image = $"/img/Categories/{imageName}";
 
-                _context.Add(product);
+                _context.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(category);
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -92,25 +89,19 @@ namespace InternalManagementECommerceTool.Areas.Dashboard.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
+            var category = await _context.Categories.FindAsync(id);
+            if (category == null)
             {
                 return NotFound();
             }
-
-            var categories = await _context.Categories.ToArrayAsync();
-
-            ViewBag.Categories = new SelectList(categories, "Id", "Name");
-
-            return View(product);
+            return View(category);
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Product product, IFormFile Image)
+        public async Task<IActionResult> Edit(int id, Category category, IFormFile Image)
         {
-            if (id != product.Id)
+            if (id != category.Id)
             {
                 return NotFound();
             }
@@ -119,40 +110,43 @@ namespace InternalManagementECommerceTool.Areas.Dashboard.Controllers
             {
                 try
                 {
-                    var oldProduct = await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+                    var oldCategory = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
+                    if (oldCategory == null)
+                    {
+                        return NotFound();
+                    }
 
                     if (Image != null)
                     {
 
                         var imageName = Guid.NewGuid() + Path.GetExtension(Image.FileName);
 
-                        if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/Products")))
+                        if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/Categories")))
                         {
-                            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/Products"));
+                            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/Categories"));
                         }
 
-                        var savePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/Products", imageName);
+                        var savePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/Categories", imageName);
 
                         await using (var stream = new FileStream(savePath, FileMode.Create))
                         {
                             await Image.CopyToAsync(stream);
                         }
 
-                        oldProduct.Image = $"/img/Products/{imageName}";
+                        oldCategory.Image = $"/img/Categories/{imageName}";
+
                     }
 
-                    oldProduct.Price = product.Price;
-                    oldProduct.Description = product.Description;
-                    oldProduct.Name = product.Name;
-                    oldProduct.CategoryId = product.CategoryId;
+                    oldCategory.Name = category.Name;
+                    oldCategory.Description = category.Description;
 
-                    _context.Update(oldProduct);
+                    _context.Update(oldCategory);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.Id))
+                    if (!CategoryExists(category.Id))
                     {
                         return NotFound();
                     }
@@ -163,7 +157,7 @@ namespace InternalManagementECommerceTool.Areas.Dashboard.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(category);
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -173,33 +167,33 @@ namespace InternalManagementECommerceTool.Areas.Dashboard.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products
+            var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(category);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product != null)
+            var category = await _context.Categories.FindAsync(id);
+            if (category != null)
             {
-                _context.Products.Remove(product);
+                _context.Categories.Remove(category);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductExists(int id)
+        private bool CategoryExists(int id)
         {
-            return _context.Products.Any(e => e.Id == id);
+            return _context.Categories.Any(e => e.Id == id);
         }
     }
 }
