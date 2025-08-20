@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using InternalManagementECommerceTool.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace InternalManagementECommerceTool.Data
@@ -9,5 +10,7 @@ namespace InternalManagementECommerceTool.Data
             : base(options)
         {
         }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Cart> Carts { get; set; }
     }
 }
