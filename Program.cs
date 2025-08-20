@@ -1,3 +1,4 @@
+using InternalManagementECommerceTool.Configuration;
 using InternalManagementECommerceTool.Data;
 using InternalManagementECommerceTool.Models;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +15,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<IRazorPayConfiguration>(builder.Configuration.GetSection("RazorPayConfiguration").Get<RazorPayConfiguration>());
 
 var app = builder.Build();
 
