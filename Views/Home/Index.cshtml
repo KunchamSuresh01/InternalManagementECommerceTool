@@ -5,7 +5,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-@section PageTitle {
+@* @section PageTitle {
     <!-- Header-->
     <header class="bg-dark py-5">
         <div class="container px-4 px-lg-5 my-5">
@@ -15,10 +15,50 @@
             </div>
         </div>
     </header>
-}
+} *@
+
+<!-- Slider main container -->
+<div class="swiper">
+    <div class="swiper-wrapper">
+        <!-- Slides -->
+        @foreach (var slide in Model.SliderImages)
+        {
+            <div class="swiper-slide">
+               <img src="@slide.Image" class="w-100" />
+            </div>
+        }
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-scrollbar"></div>
+</div>
+
+
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
+        <h2 class="text-center py-2">Categories</h2>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach(var category in Model.Categories)
+            {
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="@category.Image" alt="@category.Name" />
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <h5 class="fw-bolder">
+                                    <a asp-controller="Products" asp-action="Details" asp-route-categoryid="@category.Id">
+                                        @category.Name
+                                    </a>
+                                </h5>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            }
+        </div>
+        <h2 class="text-center py-2">Products</h2>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
             @foreach (var product in Model.Products)
@@ -46,3 +86,34 @@
         </div>
     </div>
 </section>
+
+@section Styles {
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+}
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+          const swiper = new Swiper('.swiper', {
+          // Optional parameters
+          loop: true,
+
+          // If we need pagination
+          pagination: {
+            el: '.swiper-pagination',
+          },
+
+          // Navigation arrows
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+
+          // And if we need scrollbar
+          scrollbar: {
+            el: '.swiper-scrollbar',
+          },
+        });
+    </script>
+}

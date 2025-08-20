@@ -21,8 +21,11 @@ namespace Ecommerce.Controllers
         public async Task<IActionResult> Index()
         {
             var products = await _context.Products.ToListAsync();
-
-            var model = new HomeViewModel { Products = products };
+            var sliderImages = await _context.SliderImages
+                .OrderBy(x => x.SortOrder)
+                .ToListAsync();
+            var categories = await _context.Categories.ToListAsync();
+            var model = new HomeViewModel { Products = products, SliderImages = sliderImages, Categories = categories };
 
             return View(model);
         }

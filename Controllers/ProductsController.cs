@@ -1,5 +1,6 @@
 ﻿using InternalManagementECommerceTool.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace InternalManagementECommerceTool.Controllers
@@ -13,11 +14,26 @@ namespace InternalManagementECommerceTool.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? categoryid)
         {
-            var products = await _context.Products.ToListAsync();
+            var title = "All Products";
+            var products = _context.Products.AsQueryable();
+            if (categoryid != null)
+            {
+                products = products
+                   .Where(x => x.CategoryId == categoryid);
+                var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == categoryid);
+                if (category != null)
+                {
+                    title = $"{category.Name}s";
+                }
+            }
 
-            return View(products);
+            var categories = await _context.Categories.ToListAsync();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name", categoryid);
+            ViewBag.Title = title;
+            var data = await products.ToListAsync();
+            return View(data);
         }
 
         public async Task<IActionResult> Details(int id)
