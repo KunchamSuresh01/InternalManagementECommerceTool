@@ -18,7 +18,7 @@
 } *@
 
 <!-- Slider main container -->
-<div class="swiper">
+<div class="swiper pt-3">
     <div class="swiper-wrapper">
         <!-- Slides -->
         @foreach (var slide in Model.SliderImages)
@@ -48,7 +48,7 @@
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <h5 class="fw-bolder">
-                                    <a asp-controller="Products" asp-action="Details" asp-route-categoryid="@category.Id">
+                                    <a asp-controller="Products" asp-action="Index" asp-route-categoryid="@category.Id">
                                         @category.Name
                                     </a>
                                 </h5>
