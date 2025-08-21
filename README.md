@@ -16,4 +16,4 @@ Database Configuration Setting Up the Database: 1.Open SQL Server Management Stu
 
 Install RazorPay.Core Pacakage (Important) in VisualStudio
 
-About Run Project of Internal Management Tool for eCommerce
+About How to Run and Requirments of Internal Management Tool for eCommerce Project
