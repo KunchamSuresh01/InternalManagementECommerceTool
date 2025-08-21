@@ -1,5 +1,6 @@
 ﻿using InternalManagementECommerceTool.Data;
 using InternalManagementECommerceTool.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace InternalManagementECommerceTool.Areas.Dashboard.Controllers
 {
+    [Authorize]
     [Area("Dashboard")]
     public class SliderImagesController : Controller
     {

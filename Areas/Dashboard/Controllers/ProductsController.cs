@@ -1,5 +1,6 @@
 ﻿using InternalManagementECommerceTool.Data;
 using InternalManagementECommerceTool.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace InternalManagementECommerceTool.Areas.Dashboard.Controllers
 {
+    [Authorize]
     [Area("Dashboard")]
     public class ProductsController : Controller
     {
