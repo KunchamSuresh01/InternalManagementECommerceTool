@@ -5,13 +5,8 @@
 }
 
 
-<!-- Begin Page Content -->
 <div class="container-fluid">
-
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Add Product</h1>
-
-    <!-- DataTales Example -->
+    <h1 class="h3 mb-2 text-gray-800 pt-5">Add Product</h1>
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">Add Product</h6>
@@ -40,7 +35,8 @@
                     <span asp-validation-for="Image" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="submit" value="Create" class="btn btn-primary" /> |
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
                 </div>
             </form>
         </div>

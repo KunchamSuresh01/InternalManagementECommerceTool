@@ -4,13 +4,8 @@
     ViewData["Title"] = "Index";
 }
 
-<!-- Begin Page Content -->
 <div class="container-fluid">
-
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Orders</h1>
-
-    <!-- DataTales Example -->
+    <h1 class="h3 mb-2 text-gray-800 pt-5">Orders</h1>
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">Orders</h6>
@@ -65,9 +60,9 @@
                                     @Html.DisplayFor(modelItem => item.CreatedAt)
                                 </td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-success">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
                                 </td>
                             </tr>
                         }

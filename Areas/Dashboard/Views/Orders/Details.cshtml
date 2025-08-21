@@ -5,11 +5,7 @@
 }
 
 <div class="container-fluid">
-
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Order Details</h1>
-
-    <!-- DataTales Example -->
+    <h1 class="h3 mb-2 text-gray-800 pt-5">Details</h1>
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">Order Details</h6>
@@ -90,9 +86,9 @@
                 </tbody>
             </table>
 
-            <div>
-                <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-                <a asp-action="Index">Back to List</a>
+            <div class="pb-2 pl-2">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a> |
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
             </div>
         </div>
     </div>
