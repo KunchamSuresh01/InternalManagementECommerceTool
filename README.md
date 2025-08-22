@@ -15,5 +15,6 @@ Importing the Project into Visual Studio: 1.Open Visual Studio. 2.Select "Open a
 Database Configuration Setting Up the Database: 1.Open SQL Server Management Studio. 2.Create a new database for the project, "eCommerce" or any Name for Database. 3.Excute this in VisualStudio Pacakage Manager Conlose -- Update-Database.
 
 Install RazorPay.Core Pacakage (Important) in VisualStudio
+Once Create Category go to product edit give category value for that product, then get categories.
 
 About How to Run and Requirments of Internal Management Tool for eCommerce Project
